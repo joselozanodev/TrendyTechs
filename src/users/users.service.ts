@@ -7,20 +7,20 @@ export class UsersService {
     constructor(private readonly databaseService: DatabaseService) {}
 
    async createUser(createUserDto: Prisma.UserCreateInput){
-        return this.databaseService.user.create({
+        return await this.databaseService.user.create({
             data: createUserDto
         })
     }
 
    async getAllUsers(role?: Role){
         if(role){
-            return this.databaseService.user.findMany({
+            return await this.databaseService.user.findMany({
                 where: {
                     role,
                 }
             })
         }
-        return this.databaseService.user.findMany()
+        return await this.databaseService.user.findMany()
     }
 
     async getUserById(id: string) {
@@ -35,7 +35,7 @@ export class UsersService {
 
     async updateUser(id: string, updateUserDto: Prisma.UserUpdateInput){
 
-        return this.databaseService.user.update({
+        return await this.databaseService.user.update({
             where: {
                 id,
             },
@@ -44,7 +44,7 @@ export class UsersService {
     }
 
     async deleteUser(id: string){
-        return this.databaseService.user.update({
+        return await this.databaseService.user.update({
             where: {
                 id
             },
@@ -55,7 +55,7 @@ export class UsersService {
     }
 
     async destroyUser(id: string){
-        return this.databaseService.user.delete({
+        return await this.databaseService.user.delete({
             where: {
                 id,
             }

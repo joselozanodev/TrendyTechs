@@ -1,28 +1,29 @@
-import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, ParseIntPipe } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
+import { Prisma } from '@prisma/client';
 
 @Controller('categories')
 export class CategoriesController {
     constructor(private readonly categoriesService: CategoriesService) {}
 
-    @Post('/categories')
-    createCategory(){
-        return //TODO hacer funcion que cree una categoria
+    @Post()
+    createCategory(@Body() createCategoryDto: Prisma.CategoryCreateInput){
+        return this.categoriesService.createCategory(createCategoryDto)
     }
 
-    @Get('/categories')
+    @Get()
     getAllCategories(){
-        return //TODO hacer funcion que obtenga todas las categorias
+        return this.categoriesService.getAllCategories()
     }
 
-    @Delete('/categories/:id')
-    deleteCategory(@Param('id') id: number){
-        return //TODO hacer funcion que elimine una categoria con borrado logico
+    @Delete(':id')
+    deleteCategory(@Param('id', ParseIntPipe) id: number){
+        return this.categoriesService.deleteCategory(id)
     }
 
-    @Delete('/categories/destroy/:id')
-    destroyCategory(@Param('id') id: number){
-        return //TODO hacer funcion que elimine una categoria de la base de datos
+    @Delete('/destroy/:id')
+    destroyCategory(@Param('id', ParseIntPipe) id: number){
+        return this.categoriesService.destroyCategory(id)
     }
 
 }
