@@ -7,9 +7,19 @@ export class UsersService {
     constructor(private readonly databaseService: DatabaseService) {}
 
    async createUser(createUserDto: Prisma.UserCreateInput){
-        return await this.databaseService.user.create({
-            data: createUserDto
+        const user = await this.databaseService.user.create({
+            data: createUserDto,
+            include: {
+                cart: true
+            }
         })
+        
+         await this.databaseService.cart.create({
+                data: {userId: user.id}
+        })
+        
+
+        return user
     }
 
    async getAllUsers(role?: Role){
