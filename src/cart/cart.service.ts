@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { Prisma } from '@prisma/client';
 
@@ -61,10 +61,37 @@ export class CartService {
                 }
             })
             return cartItem
+            
         }else{
-            throw new Error('Cart item not found')
+            throw new NotFoundException('Cart item not found')
 
         }   
+    }
+
+    async updateCartItemQuantity(cartId: string, quantityToAdd: number, productId: string){
+        const existingItem = await this.databaseService.cartItem.findFirst({
+            where: {
+                cartId,
+                productId,
+            }
+        })
+
+        if(existingItem){
+            
+               await this.databaseService.cartItem.update({
+                    where: {
+                        id: existingItem.id
+                    },
+                    data: {
+                        quantity: quantityToAdd + existingItem.quantity
+                    }
+                })
+ 
+                return existingItem
+            
+        }
+
+        
     }
 
 }
