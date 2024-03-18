@@ -12,10 +12,13 @@ import { ProductsService } from './products/products.service';
 import { ProductsModule } from './products/products.module';
 import { CartService } from './cart/cart.service';
 import { CartModule } from './cart/cart.module';
+import { AuthService } from './auth/auth.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UsersModule, DatabaseModule, CategoriesModule, ProductsModule, CartModule],
+  imports: [UsersModule, DatabaseModule, CategoriesModule, ProductsModule, CartModule, AuthModule, PrismaModule],
   controllers: [AppController, UsersController],
-  providers: [AppService, UsersService, DatabaseService, CategoriesService, ProductsService, CartService],
+  providers: [AppService, UsersService, DatabaseService, CategoriesService, ProductsService, CartService, AuthService],
 })
 export class AppModule {}
