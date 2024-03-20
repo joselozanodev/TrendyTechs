@@ -16,10 +16,12 @@ datasource db {
 model User {
   id        String    @id @default(uuid())
   email     String    @unique
-  password  String
   name      String?
   cart      Cart?     
   role      Role
+  hash      String
+  hashedRt  String?
+
   isDeleted Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

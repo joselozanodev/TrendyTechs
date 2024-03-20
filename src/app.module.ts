@@ -15,10 +15,11 @@ import { CartModule } from './cart/cart.module';
 import { AuthService } from './auth/auth.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [UsersModule, DatabaseModule, CategoriesModule, ProductsModule, CartModule, AuthModule, PrismaModule],
   controllers: [AppController, UsersController],
-  providers: [AppService, UsersService, DatabaseService, CategoriesService, ProductsService, CartService, AuthService],
+  providers: [AppService, UsersService, DatabaseService, CategoriesService, ProductsService, CartService, AuthService,JwtService],
 })
 export class AppModule {}
